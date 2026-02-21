@@ -1,54 +1,35 @@
-# The Island 🏝️
+# Going Merry Experience
 
-[**🔴 PLAY LIVE DEMO**](https://thedarkiin.github.io/portfolio/)
+A pure, immersive 3D sailing experience built with Three.js, React (Vite), and custom WebGL shaders. Sail the iconic *Going Merry* across an endless ocean with a dynamic day/night cycle, atmospheric effects, and music.
 
-An immersive 3D web experience featuring a procedural ocean, dynamic day/night cycles, and an interactive world. 
+## Features
 
-![Three.js](https://img.shields.io/badge/Three.js-black?style=for-the-badge&logo=three.js&logoColor=white)
-![AI Engineered](https://img.shields.io/badge/100%25_Prompt_Engineered-FFD700?style=for-the-badge)
+- **Interactive Sailing:** Use `W` `A` `S` `D` to steer the ship across the ocean. The ship bobs and turns dynamically based on speed and heading.
+- **Cinematic Orbit Camera:** Left-click and drag anywhere to orbit the camera smoothly around the ship with full horizontal and vertical freedom.
+- **Dynamic Physics & Collision:** Momentum-based steering acceleration, friction drag, and a sphere-based collision system with the central glowing island.
+- **Day/Night Cycle Engine:** Click the theme toggle to instantly transition between a vibrant sunset (day) and a dramatic thunderstorm (night) using GSAP for smooth color/light interpolation.
+- **Atmospheric Particles:** Includes fireflies, birds, lanterns, starfields, and random lightning strikes paired with a CSS screen-flash overlay for dramatic impact.
+- **PBR Water & Sky:** Utilizing Three.js official `Water` and `Sky` addons for realistic sun reflections and sky scattering.
 
-## 📖 The Origin Story
+## Controls
 
-When i was learning java, i came across an exercice about creating a particle class its velocity and acceleration, and i wanted so bad to simulate it, i asked dear Chatgpt how can i do so ? The answer : **Three.js**.
-I was fascinated by the idea, then i forgot lol ( i had to study for the exam so bad).
+* **W**: Accelerate Forward
+* **S**: Accelerate Backward
+* **A / D**: Steer Left / Right
+* **Mouse Left-Click Drag**: Orbit Camera Setup
+* **UI Controls**: 
+    * `Play/Pause`/`Next`: Cycle through custom audio tracks.
+    * `Theme Toggle`: Switch between Day (Sunset) and Night (Storm) mode.
 
-I remembered later, and the spark finally came when I scrolled past a LinkedIn post about a **"Cozy Homes" Three.js competition**. It was inspiring and the results were so cool. I decided its time to build something.
+## Lightning Alternatives (For Better Visuals)
 
-Coming from a little boy who once loved **RPG games**, I understood the logic (Object-Oriented Programming, game loops, physics), but the syntax of WebGL felt like a barrier.
+If the current lightning line-rendering isn't visually pleasing, there are three great ways to upgrade it depending on the desired aesthetic:
+1. **Full-Screen Bloom Burst (Currently Used)**: Rely solely on the bright white screen-flash and a massive point light burst, but remove the jagged 3D lines completely. This leaves it to the user's imagination.
+2. **Post-Processing God Rays (Volumetric)**: Use a post-processing pass (like Volumetric Light Scattering) combined with an emissive texture decal in the sky dome.
+3. **Decals/Sprite Sheets**: Instead of drawing lines, use a 2D sprite plane with an emissive map of an actual high-res lightning photograph that randomly rotates and appears in the far distance.
 
-### The Experiment
+## Running Locally
 
-I set a challenge for myself: **Could I vibe code a complete 3D engine?**
-
-This project is **100% Prompt Engineered**. Using my humble knowledge of OOP and game logic, i directed Gemini PRO 3 to build specific modules (Ocean, Sky, Physics, NPC AI). I guided the architecture, and refined the "feel," while Gemini handled the heavy lifting and rendering code.
-
-## 🎮 Features
-
-- **The Leviathan:** A massive, procedurally generated whale that breaches the surface. (Forgive the cheap geometry, i tried my best refining but it requires manual expertise :..)
-- **The Guardian:** A floating NPC inspired by the Pirate King himself (**Luffy** 👒). He waits for you near the island with dialogue.
-- **Dynamic Cycle:** A full Day/Night system with Rayleigh scattering sky gradients and fog.
-- **Physics & Interaction:**
-  - Sailable boat with momentum and drag.
-  - Working cannon system with particle explosions.
-  - Floating supply crates that react to the water.
-- **Audio Engine:** Procedural pink-noise ocean sounds (no external mp3 files, except the music).
-
-## 🛠️ How to Build Your Own (The Workflow)
-
-If you want to build something similar, you don't need to memorize the entire Three.js documentation. You need **Logic** and **Iteration**.
-
-1.  **Think in Modules (OOP):** Don't ask for "a game." Ask for classes. "Create a `Boat` class," "Create an `AudioEngine` class."
-2.  **Start Simple:** I started with just a dragon not even a real one it was a triangle inside a ball floating haha.
-3.  **Refine visually:** Use terms like "Low luminosity", "Rayleigh scattering", "Gradient colors" to get better visuals.
-4.  **Iterate:** When a bug happens, paste the console error. When the physics feels wrong, explain *how* it feels wrong (e.g., "The boat slides too much, add friction").
-
-## 🏴‍☠️ Song choice
-
-![One Piece](one-piece.png)
-
-*Inspired by the Grand Line.*
-
-## 📬 Contact
-
-* **Student:** Yassin Asermouh (Find me on **[LinkedIn](https://www.linkedin.com/in/yassin-asermouh-984aa8249/)**)
-* **Status:** Student Engineer @ INSEA specializing in Data Science
+1. `npm install`
+2. `npm run dev`
+3. Navigate to `http://localhost:5173/`
