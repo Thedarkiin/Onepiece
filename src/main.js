@@ -85,7 +85,7 @@ function loadIsland() {
 /* ── Load Dragon ───────────────────────────────────────────────────── */
 function loadDragon() {
     return new Promise((resolve, reject) => {
-        gltfLoader.load('./models/dragonuzi.glb',
+        gltfLoader.load('./models/dragon_flying.glb',
             (gltf) => {
                 const dragon = gltf.scene;
                 dragon.name = 'dragon';
