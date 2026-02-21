@@ -16,12 +16,12 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 /* ── Day / Night presets ──────────────────────────────────────────────── */
 export const CONFIG = {
     day: {
-        ambient: 0.55,
-        dirIntensity: 1.5,
-        sunColor: 0xffddaa,
-        fog: 0x8aa1b8,
-        fogDensity: 0.0015,
-        sky: { elevation: 5.5, azimuth: 180 },
+        ambient: 0.5,
+        dirIntensity: 1.2,
+        sunColor: 0xffa050,
+        fog: 0xa67c74,
+        fogDensity: 0.002,
+        sky: { elevation: 2.5, azimuth: 180 },
     },
     night: {
         ambient: 0.1,
@@ -91,8 +91,8 @@ export class SceneManager {
         /* ── Sky ─────────────────────────────────────────────────────────── */
         this.sky = new Sky();
         this.sky.scale.setScalar(10000);
-        this.sky.material.uniforms.turbidity.value = 8;
-        this.sky.material.uniforms.rayleigh.value = 2;
+        this.sky.material.uniforms.turbidity.value = 10;
+        this.sky.material.uniforms.rayleigh.value = 3;
         this.sky.material.uniforms.mieCoefficient.value = 0.005;
         this.sky.material.uniforms.mieDirectionalG.value = 0.8;
         this.scene.add(this.sky);

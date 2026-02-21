@@ -163,7 +163,9 @@ export function initHUD(sceneManager, world) {
       const dur = 2;
 
       themeBtn.textContent = isNight ? '🌙' : '☀️';
-      document.getElementById('ww-status').textContent = isNight ? 'STATUS: STORM' : 'STATUS: SUNRISE';
+      if (document.getElementById('ww-status')) {
+        document.getElementById('ww-status').textContent = isNight ? 'STATUS: STORM' : 'STATUS: SUNSET';
+      }
       document.getElementById('ww-temp').textContent = isNight ? 'TEMP: 8°C' : 'TEMP: 14°C';
 
       // Lights
