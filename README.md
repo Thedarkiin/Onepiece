@@ -28,7 +28,7 @@ A pure, immersive 3D sailing experience built with Three.js, React (Vite), and c
 
 I set a challenge for myself: **Could I vibe code a complete 3D engine?**
 
-This project is **Prompt Engineered**. Coming from a little boy who once loved **RPG games**, I understood the logic (Object-Oriented Programming, game loops, physics), so I used this knowledge and some basic prompt engineering techniques, and Voilaa. I directed AI to build specific modules (Ocean, Sky, Physics), guided the architecture, and refined the "feel", while the AI handled the heavy lifting and rendering code.
+This project is **Prompt Engineered**. Coming from a little boy who once loved **RPG games**, I understood the logic (Object-Oriented Programming, game loops, physics), so I used this knowledge and some prompt engineering techniques, and Voilaa. I directed AI to build specific modules (Ocean, Sky, Physics), guided the architecture, and refined the "feel", while the AI handled the heavy lifting and rendering code.
 
 ### 🎮 The World
 
@@ -45,7 +45,7 @@ This project is **Prompt Engineered**. Coming from a little boy who once loved *
 ## 📬 Contact
 
 * **Student:** Yassin Asermouh (Find me on **[LinkedIn](https://www.linkedin.com/in/yassin-asermouh-984aa8249/)**)
-* **Status:** Student Engineer @ INSEA specializing in Data Science
+* **Status:** Student Engineer @ INSEA in Data Science
 
 ---
 
