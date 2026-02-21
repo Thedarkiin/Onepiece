@@ -122,108 +122,82 @@ export class World {
     }
 
     /* ══════════════════════════════════════════════════════════════════
-       LIGHTNING (SPRITE DECAL — OPTION B)
-       - Uses a 2D sprite plane with a lightning texture
-       - Bright point light burst
-       - Full screen white flash (CSS overlay animation)
+       LIGHTNING (3D LINE + SCENE FLASH — ORIGINAL)
+       - Draws a jagged 3D Line material
+       - Flashes the actual scene background and fog to pure white
        ══════════════════════════════════════════════════════════════════ */
     _buildLightning() {
-        // Scene light for the flash burst
-        this.lightningLight = new THREE.PointLight(0xaaccff, 0, 800);
-        this.lightningLight.position.set(0, 80, 0);
-        this.scene.add(this.lightningLight);
-
-        // Lightning sprite
-        const texLoader = new THREE.TextureLoader();
-        const lnTex = texLoader.load('/textures/lightning.png');
-        const spriteMat = new THREE.SpriteMaterial({
-            map: lnTex,
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false
-        });
-        this.lightningSprite = new THREE.Sprite(spriteMat);
-        this.scene.add(this.lightningSprite);
-
-        this._lnActive = false;
-        this._lnTimer = 0;
-        this._lnPhase = 0;
-        this._lnCooldown = 4;
-        this._lnOrigin = { x: 0, z: 0 };
+        this.lightningBolts = [];
+        this._lnCooldown = 4 + Math.random() * 8;
     }
 
-    _triggerScreenFlash() {
-        if (!this._flashOverlay) return;
-        this._flashOverlay.classList.remove('flash');
-        void this._flashOverlay.offsetWidth;
-        this._flashOverlay.classList.add('flash');
-    }
+    _triggerLightning() {
+        // Flash actual scene background and fog
+        const flashColor = new THREE.Color(0xffffff);
+        // We use the night fog color from CONFIG
+        const nightFog = new THREE.Color(0x05070a);
 
-    _flashLightning() {
-        if (this._lnActive) return;
-        this._lnActive = true;
-        this._lnPhase = 0;
-        this._lnTimer = 0;
+        this.scene.background = flashColor;
+        this.scene.fog.color = flashColor;
 
-        const cam = this.sm.camera.position;
-        // Spawn burst FAR from camera (150-250 units away)
-        const angle = Math.random() * Math.PI * 2;
-        const distance = 150 + Math.random() * 100;
-        this._lnOrigin.x = cam.x + Math.cos(angle) * distance;
-        this._lnOrigin.z = cam.z + Math.sin(angle) * distance;
+        // Temporarily boost the ambient light
+        const originalIntensity = this.sm.ambientLight ? this.sm.ambientLight.intensity : 0.1;
+        if (this.sm.ambientLight) this.sm.ambientLight.intensity = 2.0;
 
-        this.lightningLight.position.set(this._lnOrigin.x, 120, this._lnOrigin.z);
+        setTimeout(() => {
+            this.scene.background = nightFog;
+            this.scene.fog.color = nightFog;
+            if (this.sm.ambientLight) this.sm.ambientLight.intensity = originalIntensity;
+        }, 100);
 
-        // Randomize sprite size and position slightly 
-        this.lightningSprite.position.set(this._lnOrigin.x, 100 + Math.random() * 40, this._lnOrigin.z);
-        const scaleXYZ = 150 + Math.random() * 100;
-        this.lightningSprite.scale.set(scaleXYZ, scaleXYZ, 1);
+        // Draw 3D Bolt
+        // Centered around the island area
+        const start = new THREE.Vector3(180 + (Math.random() - 0.5) * 150, 100 + Math.random() * 50, -80 + (Math.random() - 0.5) * 150);
+        const end = new THREE.Vector3(start.x + (Math.random() - 0.5) * 40, 0, start.z + (Math.random() - 0.5) * 40);
 
-        // Randomize rotation so the bolt looks different each time
-        this.lightningSprite.material.rotation = (Math.random() - 0.5) * 0.5;
+        const points = [];
+        let current = start.clone();
+        points.push(current.clone());
+        for (let i = 0; i < 15; i++) {
+            current.lerp(end, (i + 1) / 15);
+            if (i < 14) {
+                current.x += (Math.random() - 0.5) * 15;
+                current.z += (Math.random() - 0.5) * 15;
+            }
+            points.push(current.clone());
+        }
 
-        this._doFlash();
-        this._triggerScreenFlash();
-    }
+        const geo = new THREE.BufferGeometry().setFromPoints(points);
+        const mat = new THREE.LineBasicMaterial({ color: 0xaaddff, linewidth: 3, transparent: true });
+        const bolt = new THREE.Line(geo, mat);
 
-    _doFlash() {
-        this.lightningLight.intensity = 30 + Math.random() * 20;
-        this.lightningSprite.material.opacity = 0.8 + Math.random() * 0.2;
+        this.scene.add(bolt);
+        this.lightningBolts.push({ mesh: bolt, age: 0 });
     }
 
     _updateLightning(dt) {
+        if (!this.isNight) return;
+
         // Spawn new strike
-        if (this.isNight && !this._lnActive) {
-            this._lnCooldown -= dt;
-            if (this._lnCooldown <= 0) {
-                this._flashLightning();
-                this._lnCooldown = 4 + Math.random() * 8;
-            }
+        this._lnCooldown -= dt;
+        if (this._lnCooldown <= 0) {
+            this._triggerLightning();
+            this._lnCooldown = 4 + Math.random() * 10;
         }
 
-        if (!this._lnActive) return;
+        // Cleanup Bolts properly to prevent lag
+        for (let i = this.lightningBolts.length - 1; i >= 0; i--) {
+            const b = this.lightningBolts[i];
+            // Since dt is usually ~0.016, age increases similarly to original frame increment
+            b.age += dt * 60; // scale up to match original `b.age += 1` per frame
 
-        this._lnTimer += dt;
+            b.mesh.material.opacity = 1 - (b.age / 10);
 
-        // Multi-flicker phases: re-flash at 0.1s and 0.25s for realism
-        const phases = [0, 0.1, 0.25];
-        if (this._lnPhase < phases.length && this._lnTimer >= phases[this._lnPhase]) {
-            this._doFlash();
-            this._lnPhase++;
-        }
-
-        // Fade out after flickers
-        if (this._lnTimer >= 0.4) {
-            const fade = Math.min((this._lnTimer - 0.4) / 0.5, 1);
-            this.lightningLight.intensity = 50 * (1 - fade);
-            this.lightningSprite.material.opacity = 1 - fade;
-
-            if (fade >= 1) {
-                this._lnActive = false;
-                this.lightningLight.intensity = 0;
-                this.lightningSprite.material.opacity = 0;
+            if (b.age > 10) {
+                this.scene.remove(b.mesh);
+                b.mesh.geometry.dispose();
+                b.mesh.material.dispose();
+                this.lightningBolts.splice(i, 1);
             }
         }
     }

@@ -30,8 +30,7 @@ const controls = new OrbitControls(sm.camera, sm.renderer.domElement);
 controls.enablePan = false;
 controls.enableDamping = true;
 controls.minDistance = 20;
-controls.maxDistance = 80;
-controls.maxPolarAngle = Math.PI / 2 - 0.05;
+controls.maxDistance = 150; // give them more zoom freedom too
 
 /* ── Shared loaders ────────────────────────────────────────────────── */
 const draco = new DRACOLoader();

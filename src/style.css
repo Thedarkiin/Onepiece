@@ -38,51 +38,6 @@ html {
   height: 100% !important;
 }
 
-/* ── Lightning flash overlay ──────────────────────────────────────── */
-#lightning-flash {
-  position: fixed;
-  inset: 0;
-  z-index: 5;
-  background: white;
-  opacity: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-#lightning-flash.flash {
-  animation: lightning-flash-anim 0.6s ease-out forwards;
-}
-
-@keyframes lightning-flash-anim {
-  0% {
-    opacity: 0.9;
-  }
-
-  5% {
-    opacity: 0.2;
-  }
-
-  10% {
-    opacity: 0.85;
-  }
-
-  20% {
-    opacity: 0.1;
-  }
-
-  30% {
-    opacity: 0.7;
-  }
-
-  50% {
-    opacity: 0.05;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
 /* ═══════════════════════════════════════════════════════════════════════
    LOADER
    ═══════════════════════════════════════════════════════════════════════ */

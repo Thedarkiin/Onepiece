@@ -16,20 +16,37 @@ A pure, immersive 3D sailing experience built with Three.js, React (Vite), and c
 * **W**: Accelerate Forward
 * **S**: Accelerate Backward
 * **A / D**: Steer Left / Right
-* **Mouse Left-Click Drag**: Orbit Camera Setup
-* **UI Controls**: 
-    * `Play/Pause`/`Next`: Cycle through custom audio tracks.
-    * `Theme Toggle`: Switch between Day (Sunset) and Night (Storm) mode.
-
-## Lightning Alternatives (For Better Visuals)
-
-If the current lightning line-rendering isn't visually pleasing, there are three great ways to upgrade it depending on the desired aesthetic:
-1. **Full-Screen Bloom Burst (Currently Used)**: Rely solely on the bright white screen-flash and a massive point light burst, but remove the jagged 3D lines completely. This leaves it to the user's imagination.
-2. **Post-Processing God Rays (Volumetric)**: Use a post-processing pass (like Volumetric Light Scattering) combined with an emissive texture decal in the sky dome.
-3. **Decals/Sprite Sheets**: Instead of drawing lines, use a 2D sprite plane with an emissive map of an actual high-res lightning photograph that randomly rotates and appears in the far distance.
+* **Mouse Left-Click Drag**: Orbit Camera
 
 ## Running Locally
 
 1. `npm install`
 2. `npm run dev`
 3. Navigate to `http://localhost:5173/`
+
+## Project Origins
+
+I set a challenge for myself: **Could I vibe code a complete 3D engine?**
+
+This project is **Prompt Engineered**. Coming from a little boy who once loved **RPG games**, I understood the logic (Object-Oriented Programming, game loops, physics), so I used this knowledge and some basic prompt engineering techniques, and Voilaa. I directed AI to build specific modules (Ocean, Sky, Physics), guided the architecture, and refined the "feel", while the AI handled the heavy lifting and rendering code.
+
+### 🎮 The World
+
+- **The Dragon:** A flying dragon that circles the sky above the ship.
+- **The Island:** A floating diorama island acting as the centerpiece of the ocean.
+- **Dynamic Cycle:** A full Day/Night system with Rayleigh scattering sky gradients and fog.
+- **Physics & Interaction:** Sailable boat with momentum, drag, and OrbitControls.
+- **Audio Engine:** Custom looping audio playlist.
+
+## 🏴‍☠️ Song choice
+
+*(External .mp3 custom tracks included in the build)*
+
+## 📬 Contact
+
+* **Student:** Yassin Asermouh (Find me on **[LinkedIn](https://www.linkedin.com/in/yassin-asermouh-984aa8249/)**)
+* **Status:** Student Engineer @ INSEA specializing in Data Science
+
+---
+
+❤️ **Made with love by a One Piece fan** 🏴‍☠️
