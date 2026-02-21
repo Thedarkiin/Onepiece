@@ -16,12 +16,12 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 /* ── Day / Night presets ──────────────────────────────────────────────── */
 export const CONFIG = {
     day: {
-        ambient: 0.5,
-        dirIntensity: 1.2,
-        sunColor: 0xffa050,
-        fog: 0xa67c74,
-        fogDensity: 0.002,
-        sky: { elevation: 2.5, azimuth: 180 },
+        ambient: 0.4,
+        dirIntensity: 1.0,
+        sunColor: 0xff5511, // Deep orange/red sun
+        fog: 0x5a2d2d,      // Warm purple-red haze
+        fogDensity: 0.003,
+        sky: { elevation: 0.8, azimuth: 180 }, // Very low horizon
     },
     night: {
         ambient: 0.1,
@@ -91,10 +91,10 @@ export class SceneManager {
         /* ── Sky ─────────────────────────────────────────────────────────── */
         this.sky = new Sky();
         this.sky.scale.setScalar(10000);
-        this.sky.material.uniforms.turbidity.value = 10;
-        this.sky.material.uniforms.rayleigh.value = 3;
-        this.sky.material.uniforms.mieCoefficient.value = 0.005;
-        this.sky.material.uniforms.mieDirectionalG.value = 0.8;
+        this.sky.material.uniforms.turbidity.value = 20; // High atmospheric haze
+        this.sky.material.uniforms.rayleigh.value = 4;   // High rayleigh (pulls red/orange colors)
+        this.sky.material.uniforms.mieCoefficient.value = 0.01; // Slightly larger sun glow
+        this.sky.material.uniforms.mieDirectionalG.value = 0.99; // Focused sun disk
         this.scene.add(this.sky);
 
         this.sun = new THREE.Vector3();
