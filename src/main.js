@@ -43,7 +43,7 @@ const loader = new Loader();
 /* ── Load Island ───────────────────────────────────────────────────── */
 function loadIsland() {
     return new Promise((resolve, reject) => {
-        gltfLoader.load('/models/floating_island_diorama.glb',
+        gltfLoader.load('./models/floating_island_diorama.glb',
             (gltf) => {
                 const island = gltf.scene;
                 island.name = 'island';
@@ -85,7 +85,7 @@ function loadIsland() {
 /* ── Load Dragon ───────────────────────────────────────────────────── */
 function loadDragon() {
     return new Promise((resolve, reject) => {
-        gltfLoader.load('/models/dragon_flying.glb',
+        gltfLoader.load('./models/dragonuzi.glb',
             (gltf) => {
                 const dragon = gltf.scene;
                 dragon.name = 'dragon';
@@ -162,7 +162,7 @@ class DragonFloat {
 
 /* ── Boot ──────────────────────────────────────────────────────────── */
 Promise.all([
-    loadMerry('/models/merry.glb', sm.scene, (f, n) => loader.update(f, n)),
+    loadMerry('./models/merry.glb', sm.scene, (f, n) => loader.update(f, n)),
     loadIsland(),
     loadDragon(),
 ]).then(([merry, island, { dragon, mixer }]) => {

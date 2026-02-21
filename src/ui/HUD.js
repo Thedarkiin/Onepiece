@@ -10,9 +10,9 @@ import { CONFIG } from '@/scene/SceneManager.js';
 
 /* ── Track list ────────────────────────────────────────────────────── */
 const TRACKS = [
-  { name: 'Custom Track', file: '/audio/music.mp3' },
-  { name: "Bink's Sake", file: '/audio/binks_sake.mp3' },
-  { name: 'Gomu Gomu no Bazooka', file: '/audio/gomu_gomu.mp3' },
+  { name: 'Custom Track', file: './audio/music.mp3' },
+  { name: "Bink's Sake", file: './audio/binks_sake.mp3' },
+  { name: 'Gomu Gomu no Bazooka', file: './audio/gomu_gomu.mp3' },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════
