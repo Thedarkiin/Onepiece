@@ -48,9 +48,9 @@ class AudioEngine {
   switchTrack(index) {
     if (!this.audioElement) return;
     this.currentTrack = index;
-    const wasPlaying = !this.audioElement.paused;
+    // Force play unconditionally when switching to ensure it doesn't get stuck paused
     this.audioElement.src = TRACKS[index].file;
-    if (wasPlaying) this.audioElement.play().catch(() => { });
+    this.audioElement.play().catch(() => { });
   }
 
   nextTrack() {
@@ -116,10 +116,13 @@ export function initHUD(sceneManager, world) {
 
   // ── Start button ─────────────────────────────────────────────────
   const startBtn = document.getElementById('start-btn');
+  const trackLabel = document.getElementById('track-name');
+
   if (startBtn) {
     startBtn.addEventListener('click', () => {
       audio.init();
       ambience.init(audio.ctx);
+      if (trackLabel) trackLabel.textContent = TRACKS[0].name; // Set initial label correctly
       gsap.to('#intro-screen', {
         opacity: 0, duration: 1.2,
         onComplete: () => {
@@ -141,7 +144,6 @@ export function initHUD(sceneManager, world) {
 
   // ── Track switcher ───────────────────────────────────────────────
   const trackBtn = document.getElementById('track-btn');
-  const trackLabel = document.getElementById('track-name');
   if (trackBtn) {
     trackBtn.addEventListener('click', () => {
       audio.init();

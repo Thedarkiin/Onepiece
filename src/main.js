@@ -31,6 +31,7 @@ controls.enablePan = false;
 controls.enableDamping = true;
 controls.minDistance = 20;
 controls.maxDistance = 150; // give them more zoom freedom too
+controls.maxPolarAngle = Math.PI / 2 - 0.05; // Prevent underwater viewing
 
 /* ── Shared loaders ────────────────────────────────────────────────── */
 const draco = new DRACOLoader();
